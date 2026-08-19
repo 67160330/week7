@@ -28,6 +28,36 @@ python pipeline.py
 
 Data Warehouse ออกแบบตามสถาปัตยกรรม Star Schema ประกอบด้วย 1 Fact Table และ 3 Dimension Tables:
 
+# Retail Data Warehouse ETL Pipeline
+
+ระบบ ETL Data Pipeline อัตโนมัติด้วย Python และ SQLite สำหรับดึงข้อมูลรายการสั่งซื้อ (Orders Batches), ทำความสะอาดข้อมูล (Data Cleaning & Validation), จัดเก็บข้อมูลมีปัญหาลง Quarantine, และโหลดข้อมูลเข้าสู่ Data Warehouse ในรูปแบบ Star Schema
+
+---
+
+## 1. วิธีติดตั้ง (Installation)
+
+### ความต้องการของระบบ (Prerequisites)
+* Python: เวอร์ชัน 3.9 ขึ้นไป
+* ไลบรารีที่ต้องใช้: pandas, openpyxl, sqlite3 (มาพร้อม Python Standard Library)
+
+### ขั้นตอนการติดตั้ง
+1. วางไฟล์ชุดข้อมูล Python_Data_Pipeline_Lab_Dataset.xlsx ไว้ใน Folder เดียวกันกับโปรเจกต์
+2. ติดตั้ง Dependencies สำหรับอ่านไฟล์ Excel:
+   pip install pandas openpyxl
+
+---
+
+## 2. วิธีรันโปรแกรม (How to Run)
+
+เรียกใช้คำสั่งผ่าน Terminal หรือ Command Prompt:
+python pipeline.py
+
+---
+
+## 3. โครงสร้าง Star Schema (Data Warehouse Architecture)
+
+Data Warehouse ออกแบบตามสถาปัตยกรรม Star Schema ประกอบด้วย 1 Fact Table และ 3 Dimension Tables:
+
                   +-------------------+
                   |   dim_customer    |
                   +-------------------+
@@ -60,6 +90,12 @@ Data Warehouse ออกแบบตามสถาปัตยกรรม Star
                             | updated_at                     |
                             +--------------------------------+
 
+---
+
+## 4. คำตอบ Reflection
+
+### Q: เหตุใด Data Availability จึงมักมีความสำคัญมากกว่า Strictness ใน Production Data Pipeline?
+* ในระบบ Production Data Pipeline ระดับองค์กร Data Availability (ความพร้อมใช้งานของข้อมูล) มีความสำคัญอย่างยิ่งยวดเนื่องจาก Dashboard ผู้บริหาร ระบบ BI และเครื่องมือ Downstream Analytics ต้องใช้ข้อมูลเพื่อการตัดสินใจอย่างต่อเนื่อง  หากใช้แนวทาง Strictness (Hard Stop) ที่สั่งให้ Pipeline หยุดทำงานกะทันหันทันทีเมื่อเจอข้อมูลผิดพลาดแม้เพียง 1 รายการ จะส่งผลให้ข้อมูลทั้งหมดใน Batch นั้นไม่ถูกนำเข้า Data Warehouse เกิดปัญหาข้อมูลไม่อัปเดต (Data Downtime) ซึ่งสร้างความเสียหายทางธุรกิจมากกว่าการเลือกใช้แนวทาง Fault-Tolerant & Quarantine Pattern จึงตอบโจทย์การทำงานจริงได้ดีกว่า โดยแยกข้อมูลที่ไม่สมบูรณ์ออกไปยัง Quarantine Zone เพื่อรอการตรวจสอบ/แก้ไข ในขณะเดียวกันก็ปล่อยให้ข้อมูลส่วนใหญ่ที่ถูกต้องสามารถไหลเข้าสู่ Data Warehouse ได้ตามปกติ ทำให้ระบบธุรกิจยังคงทำงานได้อย่างต่อเนื่องและมีความน่าเชื่อถือ
 ---
 
 ## 4. คำตอบ Reflection
