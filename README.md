@@ -59,39 +59,39 @@ python pipeline.py
 Data Warehouse ออกแบบตามสถาปัตยกรรม Star Schema ประกอบด้วย 1 Fact Table และ 3 Dimension Tables:
 
 +-------------------+
-                     |   dim_customer    |
-                     +-------------------+
-                     | customer_key (PK) | <----+
-                     | customer_id       |      |
-                     | customer_name     |      |
-                     | province          |      |
-                     | segment           |      |
-                     +-------------------+      |
-                                                |
-+-----------------+                    +--------+-------+
-|    dim_date     |                    |   fact_sales   |
-+-----------------+                    +----------------+
-| date_key (PK)   | <------------------| date_key (FK)  |
-| full_date       |                    | customer_key   |
-| day             |                    | product_key    | <---+
-| month           |                    | quantity       |     |
-| quarter         |                    | unit_price     |     |
-| year            |                    | discount_pct   |     |
-+-----------------+                    | gross_amount   |     |
-                                       | net_amount     |     |
-                                       | payment_method |     |
-                                       | sales_channel  |     |
-                                       | updated_at     |     |
-                                       +----------------+     |
-                                                              |
-                                       +------------------+   |
-                                       |   dim_product    |   |
-                                       +------------------+   |
-                                       | product_key (PK) |---+
-                                       | product_id       |
-                                       | product_name     |
-                                       | category         |
-                                       +------------------+
+              |   dim_customer    |
+              +-------------------+
+              | customer_key (PK) | <----+
+              | customer_id       |      |
+              | customer_name     |      |
+              | province          |      |
+              | segment           |      |
+              +-------------------+      |
+                                         |
++-----------------+            +--------+-------+
+|    dim_date     |            |   fact_sales   |
++-----------------+            +----------------+
+| date_key (PK)   | <----------| date_key (FK)  |
+| full_date       |            | customer_key   |
+| day             |            | product_key    | <---+
+| month           |            | quantity       |     |
+| quarter         |            | unit_price     |     |
+| year            |            | discount_pct   |     |
++-----------------+            | gross_amount   |     |
+                               | net_amount     |     |
+                               | payment_method |     |
+                               | sales_channel  |     |
+                               | updated_at     |     |
+                               +----------------+     |
+                                                      |
+                               +------------------+   |
+                               |   dim_product    |   |
+                               +------------------+   |
+                               | product_key (PK) |---+
+                               | product_id       |
+                               | product_name     |
+                               | category         |
+                               +------------------+
 
 
 ---
